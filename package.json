@@ -1,0 +1,27 @@
+{
+  "name": "s57-ol",
+  "version": "1.0.0",
+  "description": "OpenLayers rendering for S57 data received from Njord/OpenENC",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "s57",
+    "openlayers",
+    "nautical",
+    "charts",
+    "njord"
+  ],
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "ol": "^8.2.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}

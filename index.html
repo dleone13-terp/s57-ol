@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S57 OpenLayers Example</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+    }
+    
+    #map {
+      width: 100%;
+      height: 100vh;
+    }
+    
+    .controls {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: white;
+      padding: 15px;
+      border-radius: 5px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      z-index: 1000;
+    }
+    
+    .controls h3 {
+      margin: 0 0 10px 0;
+      font-size: 14px;
+    }
+    
+    .controls button {
+      display: block;
+      width: 100%;
+      margin: 5px 0;
+      padding: 8px 12px;
+      border: none;
+      background: #4CAF50;
+      color: white;
+      cursor: pointer;
+      border-radius: 3px;
+      font-size: 13px;
+    }
+    
+    .controls button:hover {
+      background: #45a049;
+    }
+    
+    .controls button.active {
+      background: #2196F3;
+    }
+    
+    .info {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 12px;
+      max-width: 300px;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  
+  <div class="controls">
+    <h3>Theme</h3>
+    <button id="dayBtn" class="active">Day</button>
+    <button id="duskBtn">Dusk</button>
+    <button id="nightBtn">Night</button>
+  </div>
+  
+  <div class="info">
+    <strong>S57 OpenLayers Renderer</strong><br>
+    Based on <a href="https://github.com/manimaul/njord" target="_blank">Njord</a> styling<br>
+    <small>Use the buttons to switch themes</small>
+  </div>
+
+  <script type="module">
+    import { createS57Map, changeTheme } from './src/index.js';
+
+    // Initialize map with DAY theme
+    let currentTheme = 'DAY';
+    const map = createS57Map({
+      target: 'map',
+      theme: currentTheme,
+      center: [-122.4, 37.8], // San Francisco Bay
+      zoom: 10
+      // To use with Njord server, add:
+      // tileUrl: 'http://localhost:9000/v1/tiles/{z}/{x}/{y}.pbf'
+    });
+
+    // Theme switching
+    const buttons = {
+      DAY: document.getElementById('dayBtn'),
+      DUSK: document.getElementById('duskBtn'),
+      NIGHT: document.getElementById('nightBtn')
+    };
+
+    Object.entries(buttons).forEach(([theme, button]) => {
+      button.addEventListener('click', () => {
+        // Update active button
+        Object.values(buttons).forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        
+        // Change map theme
+        currentTheme = theme;
+        changeTheme(map, theme);
+      });
+    });
+  </script>
+</body>
+</html>
