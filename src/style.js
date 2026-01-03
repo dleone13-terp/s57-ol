@@ -138,10 +138,10 @@ function getStyleForObject(objectClass, geometryType, theme, properties) {
     case 'SOUNDG': // Sounding
       if (geometryType === 'Point' || geometryType === 'MultiPoint') {
         const depth = properties.DEPTH;
-        if (depth !== undefined) {
+        if (depth !== undefined && depth !== null) {
           styles.push(new Style({
             text: new Text({
-              text: depth.toString(),
+              text: String(depth),
               font: '10px sans-serif',
               fill: new Fill({
                 color: getColor('SNDG2', theme)
