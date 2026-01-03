@@ -13,7 +13,11 @@ import { getColor } from './colors.js';
  */
 export function createS57StyleFunction(theme = 'DAY') {
   return function(feature) {
-    const geometryType = feature.getGeometry()?.getType();
+    const geometry = feature.getGeometry();
+    if (!geometry) {
+      return [];
+    }
+    const geometryType = geometry.getType();
     const properties = feature.getProperties();
     const objectClass = properties.OBJL || properties.layer || 'UNKNOWN';
     

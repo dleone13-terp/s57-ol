@@ -93,9 +93,12 @@ export function changeTheme(map, newTheme) {
   map.getTargetElement().style.backgroundColor = backgroundColor;
   
   // Update all layers with new theme
+  const newStyleFunction = createS57StyleFunction(newTheme);
   map.getLayers().forEach(layer => {
-    if (layer.setStyle) {
-      layer.setStyle(createS57StyleFunction(newTheme));
+    if (layer instanceof VectorLayer) {
+      layer.setStyle(newStyleFunction);
+    } else if (layer instanceof VectorTileLayer) {
+      layer.setStyle(newStyleFunction);
     }
   });
   
